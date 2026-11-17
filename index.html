@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>週六晚餐候選</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-soft:#f7f3ee;
+    --card:#ffffff;
+    --text:#1a1714;
+    --muted:#6b6259;
+    --line:#e9e0d6;
+    --accent:#c2410c;
+    --accent-soft:#fff1e6;
+    --chip:#f3ede6;
+    --btn:#1a1714;
+    --btn-text:#fff;
+    --shadow:0 1px 2px rgba(26,23,20,.05), 0 8px 24px rgba(26,23,20,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#131110;
+      --bg-soft:#1c1917;
+      --card:#1e1b19;
+      --text:#f5f0eb;
+      --muted:#a8a09a;
+      --line:#322c28;
+      --accent:#fb923c;
+      --accent-soft:#2b1d12;
+      --chip:#292421;
+      --btn:#f5f0eb;
+      --btn-text:#131110;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 18px 48px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+  .date-badge{display:inline-flex;align-items:center;gap:8px;background:var(--text);color:var(--bg);font-weight:700;font-size:13px;letter-spacing:.04em;padding:8px 12px;border-radius:999px}
+  .date-badge i{width:7px;height:7px;background:#f59e0b;border-radius:50%;display:block}
+  .count{font-size:13px;color:var(--muted);font-weight:500}
+  h1{font-family:"Noto Serif TC",serif;font-size:42px;line-height:1.05;letter-spacing:-.02em;margin:0 0 10px;font-weight:900}
+  h1 span{color:var(--accent)}
+  .lead{font-size:16px;line-height:1.6;color:var(--muted);margin:0;max-width:560px}
+  .lead strong{color:var(--text)}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .meta-pill{font-size:13px;font-weight:600;background:var(--bg-soft);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+  .hint{margin-top:14px;font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+  .hint::before{content:"👇";font-size:14px}
+  .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:26px}
+  @media(min-width:640px){.grid{grid-template-columns:1fr 1fr} h1{font-size:54px}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 18px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .num{font-family:"Noto Serif TC",serif;font-size:28px;line-height:1;font-weight:900;color:var(--line);min-width:36px}
+  @media (prefers-color-scheme: dark){.num{color:#3a332e}}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+  .tag{font-size:11.5px;font-weight:700;letter-spacing:.02em;padding:5px 8px;border-radius:999px;background:var(--chip);color:var(--muted);white-space:nowrap}
+  .tag.hot{background:var(--accent-soft);color:var(--accent)}
+  .name{font-size:21px;line-height:1.25;font-weight:900;letter-spacing:-.01em;margin:12px 0 2px}
+  .name small{display:block;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+  .desc{font-size:14.5px;line-height:1.55;color:var(--text);margin:8px 0 0}
+  .addr{font-size:13px;line-height:1.5;color:var(--muted);margin-top:10px;display:flex;gap:6px}
+  .addr::before{content:"📍";font-size:13px;flex-shrink:0}
+  .note{margin-top:10px;font-size:13px;line-height:1.5;background:var(--bg-soft);border:1px dashed var(--line);border-radius:10px;padding:9px 10px;color:var(--muted)}
+  .note b{color:var(--text)}
+  .spacer{flex:1;min-height:14px}
+  .map-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;background:var(--btn);color:var(--btn-text);font-weight:800;font-size:15px;padding:14px 16px;border-radius:14px;min-height:52px}
+  .map-btn:active{transform:scale(.99)}
+  .map-btn span:last-child{font-size:18px;line-height:1}
+  .map-btn small{font-weight:500;opacity:.75;font-size:12.5px}
+  .wheel-sec{margin-top:26px;background:var(--bg-soft);border:1px solid var(--line);border-radius:20px;padding:22px 18px 20px;text-align:center}
+  .wheel-sec h2{font-family:"Noto Serif TC",serif;font-size:24px;font-weight:900;margin:0 0 6px;letter-spacing:-.01em}
+  .wheel-sec h2 span{color:var(--accent)}
+  .wheel-sec p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto;max-width:420px}
+  .wheel-stage{position:relative;width:min(320px,82vw);margin:20px auto 4px}
+  .wheel-pointer{position:absolute;top:-8px;left:50%;transform:translateX(-50%);z-index:3;width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:22px solid var(--accent);filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+  #wheel{display:block;width:100%;height:auto;border-radius:50%;box-shadow:0 10px 30px rgba(26,23,20,.18)}
+  .wheel-hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:74px;height:74px;border-radius:50%;border:3px solid var(--bg);background:var(--btn);color:var(--btn-text);font-family:inherit;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);padding:0}
+  .wheel-hub:disabled{opacity:.65;cursor:wait}
+  .wheel-hub:active{transform:translate(-50%,-50%) scale(.97)}
+  .wheel-result{margin-top:16px;min-height:24px}
+  .wheel-result .wr-label{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.06em}
+  .wheel-result .wr-name{font-size:24px;font-weight:900;margin-top:4px;line-height:1.3}
+  .wheel-result .wr-name span{color:var(--accent)}
+  .wheel-actions{display:none;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .wheel-actions.show{display:flex}
+  .wheel-actions a,.wheel-actions button{font-family:inherit;text-decoration:none;font-weight:800;font-size:14.5px;padding:12px 18px;border-radius:12px;min-height:48px;display:inline-flex;align-items:center;cursor:pointer}
+  .wr-map{background:var(--accent);color:#fff;border:none}
+  @media (prefers-color-scheme: dark){.wr-map{color:#131110}}
+  .wr-again{background:transparent;color:var(--text);border:1.5px solid var(--line)}
+  .card.picked{outline:3px solid var(--accent);outline-offset:2px}
+  .picked-badge{display:none;font-size:11.5px;font-weight:800;background:var(--accent);color:#fff;padding:5px 9px;border-radius:999px;white-space:nowrap}
+  @media (prefers-color-scheme: dark){.picked-badge{color:#131110}}
+  .card.picked .picked-badge{display:inline-block}
+  @media(min-width:640px){.card.featured{grid-column:span 2;flex-direction:row;gap:20px;align-items:stretch}.card.featured .left{flex:1}.card.featured .right{width:220px;display:flex;flex-direction:column;justify-content:flex-end}.card.featured .num{font-size:36px}}
+  footer{margin-top:28px;padding:18px;border-radius:16px;background:var(--bg-soft);border:1px solid var(--line)}
+  footer p{margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+  footer strong{color:var(--text)}
+  .foot-note{margin-top:18px;text-align:center;font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topbar">
+    <div class="date-badge"><i></i> 11/21 週六 · 晚餐</div>
+    <div class="count">共 12 家候選</div>
+  </div>
+
+  <h1>週六晚餐<br><span>幫我選一家</span></h1>
+  <p class="lead">這禮拜六晚上、<strong>2 個人、台北</strong>。下面都是 IG / Threads 上蠻紅、評價也不錯的店，有大有小、口味都不一樣。看到喜歡的直接點進去看地圖跟照片，選好告訴我編號就好。</p>
+
+  <div class="meta-row">
+    <span class="meta-pill">📅 2026/11/21（六）</span>
+    <span class="meta-pill">👥 2 人</span>
+    <span class="meta-pill">🌙 晚餐時段</span>
+    <span class="meta-pill">📍 台北</span>
+  </div>
+  <p class="hint">每一張卡片下面都有 Google Maps，點開就能看位置、評分和照片</p>
+
+  <section class="grid" aria-label="餐廳候選清單">
+
+    <article class="card featured">
+      <div class="left">
+        <div class="card-top">
+          <div class="num">01</div>
+          <div class="tags"><span class="tag hot">A5 和牛</span><span class="tag">燒肉</span><span class="tag">中山</span></div>
+        </div>
+        <h2 class="name">赤身燒肉 USHIO <small>USHIO Taipei</small></h2>
+        <p class="desc">A5 和牛燒肉，價位偏高，適合想吃好一點的那種晚上。肉質是主打，份量可以自己控制。</p>
+        <p class="addr">台北市中山區中山北路一段 57 號 · 中山北路</p>
+      </div>
+      <div class="right">
+        <div class="spacer"></div>
+        <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E8%B5%A4%E8%BA%AB%E7%87%92%E8%82%89%20USHIO%20Taipei%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E4%B8%AD%E5%B1%B1%E5%8C%97%E8%B7%AF%E4%B8%80%E6%AE%B557%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">02</div><div class="tags"><span class="tag hot">米其林餐盤</span><span class="tag">義式</span></div></div>
+      <h2 class="name">Antico Forno 老烤箱 <small>義式披薩餐酒</small></h2>
+      <p class="desc">瑞安街的義式披薩餐酒館，氣氛很好，披薩是招牌。想吃輕鬆一點的西式選這家。</p>
+      <p class="addr">台北市大安區瑞安街 141 號</p>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Antico%20Forno%20%E8%80%81%E7%83%A4%E7%AE%B1%E7%BE%A9%E5%BC%8F%E6%8A%AB%E8%96%A9%E9%A4%90%E9%85%92%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E7%91%9E%E5%AE%89%E8%A1%97141%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">03</div><div class="tags"><span class="tag">韓式烤肉</span><span class="tag">忠孝敦化</span></div></div>
+      <h2 class="name">金宴火爐 <small>韓式烤肉</small></h2>
+      <p class="desc">忠孝敦化巷子裡的韓式烤肉，位置很方便，吃完附近也好逛。</p>
+      <p class="addr">台北市大安區忠孝東路四段 170 巷 6 弄 5 號</p>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E9%87%91%E5%AE%B4%E7%81%AB%E7%88%90%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E5%BF%A0%E5%AD%9D%E6%9D%B1%E8%B7%AF%E5%9B%9B%E6%AE%B5170%E5%B7%B76%E5%BC%845%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">04</div><div class="tags"><span class="tag">韓式烤肉</span><span class="tag">內湖</span></div></div>
+      <h2 class="name">三元花園 潭美店 <small>Samwon Garden 韓式餐廳</small></h2>
+      <p class="desc">首爾開了快 50 年的老店來台北，宮廷炭火燒肉路線，正宗韓式，店面很大很氣派。</p>
+      <p class="addr">台北市內湖區石潭路 1 號</p>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E4%B8%89%E5%85%83%E8%8A%B1%E5%9C%92%E9%9F%93%E5%BC%8F%E9%A4%90%E5%BB%B3%20%E6%BD%AD%E7%BE%8E%E5%BA%97%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%85%A7%E6%B9%96%E5%8D%80%E7%9F%B3%E6%BD%AD%E8%B7%AF1%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">05</div><div class="tags"><span class="tag hot">20 年老店</span><span class="tag">印度料理</span></div></div>
+      <h2 class="name">印渡風情 師大店 <small>印度料理 · 奶油雞 + 烤餅</small></h2>
+      <p class="desc">全店印度廚師，奶油雞超濃郁，配現做烤餅（推起司烤餅）一絕。IG 上最近很紅的那支就是它。</p>
+      <p class="addr">台北市大安區浦城街 13 巷 26 號 · 古亭 / 師大</p>
+      <div class="note"><b>小提醒：</b>這是師大創始店，它在南京復興旁邊還有慶城店，想去另一家跟我說。</div>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%8D%B0%E6%B8%A1%E9%A2%A8%E6%83%85%20%E5%B8%AB%E5%A4%A7%E5%BA%97%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E6%B5%A6%E5%9F%8E%E8%A1%9713%E5%B7%B726%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">06</div><div class="tags"><span class="tag">居酒屋</span><span class="tag">民權西路</span></div></div>
+      <h2 class="name">至誠居酒屋 <small>しせい -shisei- · 日式居酒屋</small></h2>
+      <p class="desc">日本人開的居酒屋，吧台氛圍，18:00–24:00。想小酌、吃串燒小菜選這家很對味。</p>
+      <p class="addr">台北市中山區天祥路 42 號 · 民權西路站</p>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E8%87%B3%E8%AA%A0%E5%B1%85%E9%85%92%E5%B1%8B%20shisei%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E5%A4%A9%E7%A5%A5%E8%B7%AF42%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">07</div><div class="tags"><span class="tag">歐式創意</span><span class="tag">松山</span></div></div>
+      <h2 class="name">LilyCoco 莉莉可可 <small>歐式創意小餐館</small></h2>
+      <p class="desc">很難定義、但很好吃的小餐館，菜單不定期換。IG 要先看精選動態空位再私訊訂位，是這批裡最有個性的一家。</p>
+      <p class="addr">台北市松山區八德路二段 346 巷 7 弄 42 號</p>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=LilyCoco%20%E8%8E%89%E8%8E%89%E5%8F%AF%E5%8F%AF%20%E5%8F%B0%E5%8C%97%E5%B8%82%E6%9D%BE%E5%B1%B1%E5%8D%80%E5%85%AB%E5%BE%B7%E8%B7%AF%E4%BA%8C%E6%AE%B5346%E5%B7%B77%E5%BC%8442%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">08</div><div class="tags"><span class="tag">早午餐</span><span class="tag">民生社區</span></div></div>
+      <h2 class="name">MERCER BRUNCH <small>MERCER BRUNCH TAIWAN · 4.0 ★ (938)</small></h2>
+      <p class="desc">民生社區的早午餐，招牌是布里歐法式吐司，外酥內軟、點主餐還附 2 片。</p>
+      <p class="addr">台北市松山區民生東路四段 121 號</p>
+      <div class="note"><b>先講好：</b>晚餐時段<strong>沒有</strong>招牌法式吐司，想吃吐司要改白天來。這家比較適合當白天備案。</div>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=MERCER%20BRUNCH%20TAIWAN%20%E5%8F%B0%E5%8C%97%E5%B8%82%E6%9D%BE%E5%B1%B1%E5%8D%80%E6%B0%91%E7%94%9F%E6%9D%B1%E8%B7%AF%E5%9B%9B%E6%AE%B5121%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">09</div><div class="tags"><span class="tag hot">小份單點</span><span class="tag">現代居酒屋</span></div></div>
+      <h2 class="name">山男 Yamasan <small>現代居酒屋 · 4.4 ★ (1,275)</small></h2>
+      <p class="desc">信義安和的現代居酒屋，全是小品單點、想吃幾道點幾道，海膽泡芙和招牌拌麵是必點，吧台可以看製作過程。</p>
+      <p class="addr">台北市大安區敦化南路二段 63 巷 53 弄 3 號 · 信義安和</p>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%B1%B1%E7%94%B7%20Yamasan%20%E7%8F%BE%E4%BB%A3%E5%B1%85%E9%85%92%E5%B1%8B%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E6%95%A6%E5%8C%96%E5%8D%97%E8%B7%AF%E4%BA%8C%E6%AE%B563%E5%B7%B753%E5%BC%843%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">10</div><div class="tags"><span class="tag hot">新開幕</span><span class="tag">大安</span></div></div>
+      <h2 class="name">Oie Taipei <small>Oie Taipei · inline 訂位</small></h2>
+      <p class="desc">光復南路巷子裡即將開幕的新店，門面低調沉穩、氣氛走質感路線，是這批裡最新的面孔。</p>
+      <p class="addr">台北市大安區光復南路 240 巷 50 號 · 國父紀念館一帶</p>
+      <div class="note"><b>先講好：</b>店家公告寫「即將開幕」，12/21–12/30 有優先訂位、免服務費；11/21 當天能不能訂，選這家再幫你確認。</div>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Oie%20Taipei%20%E5%8F%B0%E5%8C%97%E5%B8%82%E5%A4%A7%E5%AE%89%E5%8D%80%E5%85%89%E5%BE%A9%E5%8D%97%E8%B7%AF240%E5%B7%B750%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">11</div><div class="tags"><span class="tag hot">4.8 ★</span><span class="tag">林森北路</span></div></div>
+      <h2 class="name">野菜家 <small>4.8 ★ (7) · NT$999 以下</small></h2>
+      <p class="desc">林森北路巷子裡的小店，價位親切（999 以下），OpenTable 上評價 4.8。輕鬆吃、不傷荷包的選項。</p>
+      <p class="addr">台北市中山區林森北路 119 巷 74 號</p>
+      <div class="note"><b>週六有位：</b>查到 11/21 晚上 18:45、19:00、19:15 都還能訂（OpenTable，2 位）。</div>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E8%8F%9C%E5%AE%B6%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8D%80%E6%9E%97%E6%A3%AE%E5%8C%97%E8%B7%AF119%E5%B7%B774%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+    <article class="card">
+      <div class="card-top"><div class="num">12</div><div class="tags"><span class="tag">台式</span><span class="tag">善導寺</span></div></div>
+      <h2 class="name">忠青商行 <small>台灣餐廳 · 3.9 ★ (3,971) · $200–400</small></h2>
+      <p class="desc">善導寺旁的台式飯館，蝦仁飯跟外酥內嫩的忠青炸排骨是招牌，價位很平實，想吃台菜家常味選這家。</p>
+      <p class="addr">台北市中正區青島東路 6-1 號 · 善導寺</p>
+      <div class="note"><b>小提醒：</b>尖峰時段人多、要排隊等候，週六晚上可能要等一下。</div>
+      <div class="spacer"></div>
+      <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=%E5%BF%A0%E9%9D%92%E5%95%86%E8%A1%8C%20%E5%8F%B0%E5%8C%97%E5%B8%82%E4%B8%AD%E6%AD%A3%E5%8D%80%E9%9D%92%E5%B3%B6%E6%9D%B1%E8%B7%AF6-1%E8%99%9F" target="_blank" rel="noopener"><span>看地圖 <small>Google Maps</small></span><span>→</span></a>
+    </article>
+
+  </section>
+
+  <footer>
+    <p><strong>選好了嗎？</strong> 直接回我編號或店名就好（例如「9 山男」），我再幫忙確認週六晚上的時段跟訂位。還沒想法也沒關係，先從口味下手：想吃肉選 1 / 3 / 4，想輕鬆小酌選 6 / 9，想換口味選 5，想吃台式選 12，預算輕鬆選 11，想嚐鮮新店選 10。</p>
+  </footer>
+
+  <section class="wheel-sec" aria-label="轉盤幫你選">
+    <h2>選不出來？<span>轉盤幫你決定</span></h2>
+    <p>12 家全放進轉盤了，點中間的「轉！」就隨機抽一家，抽到哪家吃哪家，不用再糾結。</p>
+    <div class="wheel-stage">
+      <div class="wheel-pointer" aria-hidden="true"></div>
+      <canvas id="wheel" width="640" height="640" role="img" aria-label="餐廳轉盤，共有 12 家候選"></canvas>
+      <button class="wheel-hub" id="spinBtn" type="button">轉！</button>
+    </div>
+    <div class="wheel-result" aria-live="polite">
+      <div class="wr-label" id="wrLabel">按下轉盤，看看今晚吃哪家</div>
+      <div class="wr-name" id="wrName"></div>
+    </div>
+    <div class="wheel-actions" id="wrActions">
+      <a class="wr-map" id="wrMap" href="#" target="_blank" rel="noopener">看這家的地圖 →</a>
+      <button class="wr-again" id="wrCard" type="button">看這家的介紹 ↑</button>
+    </div>
+  </section>
+
+  <p class="foot-note">地圖連結點開會跳到 Google Maps App / 網頁版 · 地址以店家公告為準</p>
+</main>
+<script>
+(function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var shortNames = ['USHIO 燒肉','老烤箱','金宴火爐','三元花園','印渡風情','至誠居酒屋','莉莉可可','MERCER','山男','Oie Taipei','野菜家','忠青商行'];
+  var items = cards.map(function(card, i){
+    var nameEl = card.querySelector('.name');
+    var full = nameEl ? nameEl.childNodes[0].textContent.trim() : '';
+    var link = card.querySelector('.map-btn');
+    var num = card.querySelector('.num');
+    return {
+      card: card,
+      num: num ? num.textContent.trim() : String(i + 1),
+      full: full,
+      short: shortNames[i] || full,
+      href: link ? link.getAttribute('href') : '#'
+    };
+  });
+  var N = items.length;
+  if (!N) return;
+
+  var colors = ['#d97706','#c2410c','#65a30d','#0f766e','#b91c1c','#a16207','#0369a1','#be5a38','#4d7c0f','#9a3412','#0e7490','#854d0e'];
+  var canvas = document.getElementById('wheel');
+  var ctx = canvas.getContext('2d');
+  var spinBtn = document.getElementById('spinBtn');
+  var wrLabel = document.getElementById('wrLabel');
+  var wrName = document.getElementById('wrName');
+  var wrActions = document.getElementById('wrActions');
+  var wrMap = document.getElementById('wrMap');
+  var wrCard = document.getElementById('wrCard');
+  var seg = Math.PI * 2 / N;
+  var rotation = 0;
+  var spinning = false;
+  var winner = null;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function draw(rot){
+    var S = canvas.width, C = S / 2, R = C - 6;
+    ctx.clearRect(0, 0, S, S);
+    for (var i = 0; i < N; i++){
+      var a0 = rot + i * seg, a1 = a0 + seg;
+      ctx.beginPath();
+      ctx.moveTo(C, C);
+      ctx.arc(C, C, R, a0, a1);
+      ctx.closePath();
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.55)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.save();
+      ctx.translate(C, C);
+      ctx.rotate(a0 + seg / 2);
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.font = '700 25px "Noto Sans TC", sans-serif';
+      ctx.shadowColor = 'rgba(0,0,0,.35)';
+      ctx.shadowBlur = 3;
+      ctx.fillText(items[i].short, R - 16, 0);
+      ctx.restore();
+    }
+    ctx.beginPath();
+    ctx.arc(C, C, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(0,0,0,.15)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  function clearPicked(){
+    items.forEach(function(it){
+      it.card.classList.remove('picked');
+      var b = it.card.querySelector('.picked-badge');
+      if (b) b.parentNode.removeChild(b);
+    });
+  }
+
+  function finish(idx){
+    spinning = false;
+    spinBtn.disabled = false;
+    spinBtn.textContent = '再轉';
+    winner = items[idx];
+    clearPicked();
+    winner.card.classList.add('picked');
+    var tags = winner.card.querySelector('.tags');
+    if (tags){
+      var badge = document.createElement('span');
+      badge.className = 'picked-badge';
+      badge.textContent = '🎯 轉盤選中';
+      tags.insertBefore(badge, tags.firstChild);
+    }
+    wrLabel.textContent = '🎉 就決定是這家了';
+    wrName.innerHTML = '';
+    var n = document.createElement('span');
+    n.textContent = winner.num + ' 號 · ';
+    wrName.appendChild(n);
+    wrName.appendChild(document.createTextNode(winner.full));
+    wrMap.href = winner.href;
+    wrActions.classList.add('show');
+  }
+
+  function spin(){
+    if (spinning) return;
+    spinning = true;
+    spinBtn.disabled = true;
+    spinBtn.textContent = '轉…';
+    wrLabel.textContent = '轉盤轉動中，好緊張…';
+    wrName.textContent = '';
+    wrActions.classList.remove('show');
+    clearPicked();
+
+    var idx = Math.floor(Math.random() * N);
+    var target = -Math.PI / 2 - (idx * seg + seg / 2);
+    var twoPi = Math.PI * 2;
+    var cur = ((rotation % twoPi) + twoPi) % twoPi;
+    var tgt = ((target % twoPi) + twoPi) % twoPi;
+    var delta = tgt - cur;
+    if (delta <= 0) delta += twoPi;
+    var total = (reduceMotion ? 0 : Math.PI * 2 * 6) + delta;
+    var start = rotation;
+    var duration = reduceMotion ? 60 : 4600;
+    var t0 = null;
+
+    function frame(ts){
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 4);
+      rotation = start + total * eased;
+      draw(rotation);
+      if (p < 1) requestAnimationFrame(frame);
+      else finish(idx);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  spinBtn.addEventListener('click', spin);
+  wrCard.addEventListener('click', function(){
+    if (winner) winner.card.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+  });
+  draw(0);
+})();
+</script>
+</body>
+</html>
